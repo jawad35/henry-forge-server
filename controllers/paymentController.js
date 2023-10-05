@@ -1,6 +1,6 @@
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const fetch =  require('node-fetch');
-const base = "https://api.paypal.com";
+const base = "https://api-m.sandbox.paypal.com";
 
 // // const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
