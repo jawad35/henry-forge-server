@@ -5,32 +5,15 @@ const ErrorHander = require("../utils/errorhander");
 
 // Create Product -- Admin
 exports.createBanner = catchAsyncErrors(async (req, res, next) => {
-  let images = [];
-
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
-
-  const imagesLinks = [];
-
-  for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i], {
-      folder: "banners",
-      chunk_size:6000000
-    });
-
-    imagesLinks.push({
-      public_id: result.public_id,
-      url: result.secure_url,
-    });
-  }
-
-  req.body.images = imagesLinks;
-  req.body.user = req.user.id;
-
-  const banner = await Banner.create(req.body);
+  const myBannerCloud = await cloudinary.v2.uploader.upload(req?.body?.images, {
+    folder: "banners",
+  });
+  const banner = await Banner.create({
+    banner: {
+      public_id: myBannerCloud.public_id,
+      url: myBannerCloud.secure_url,
+    },
+  });
 
   res.status(201).json({
     success: true,

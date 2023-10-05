@@ -3,12 +3,14 @@ const app = express();
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const path = require("path");
-const fs = require('fs')
 const errorMiddleware = require("./middleware/error");
 const cors = require("cors");
+
 // Config
 if (process.env.NODE_ENV !== "PRODUCTION") {
-  require("dotenv").config({ path: "server/config/config.env" });
+require('dotenv').config();
+
+  // require("dotenv").config({ path: "server/config/.env" });
 }
 
 // const multer = require('multer');
@@ -28,8 +30,6 @@ const order = require("./routes/orderRoute");
 const payment = require("./routes/paymentRoute");
 const category = require("./routes/categoriesRoute");
 const banner = require("./routes/bannerRoutes");
-const upload = require("./utils/muter");
-const cloudinary = require("./utils/cloudinary")
 app.use("/api/v1", product);
 app.use("/api/v1", user);
 app.use("/api/v1", order);
@@ -39,6 +39,7 @@ app.use("/api/v1", banner);
 app.get('/api/config/paypal', (req,res)=>{
   res.send(process.env.PAYPAL_CLIENT_ID)
 })
+
 
 app.use(express.static(path.join(__dirname, "./build")));
 
