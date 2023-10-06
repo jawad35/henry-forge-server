@@ -5,7 +5,7 @@ const ErrorHander = require("../utils/errorhander");
 
 // Create Product -- Admin
 exports.createBanner = catchAsyncErrors(async (req, res, next) => {
-  const myBannerCloud = await cloudinary.v2.uploader.upload(req?.body?.images, {
+  const myBannerCloud = await cloudinary.v2.uploader.upload(req.body.images, {
     folder: "banners",
   });
   const banner = await Banner.create({
